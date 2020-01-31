@@ -1,0 +1,14 @@
+{
+    "name": "jof/dry_php",
+    "description": "Dry::Schema and Dry::Validation for php",
+    "type": "library",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dry\\": "lib/"
+        }
+    }
+}
