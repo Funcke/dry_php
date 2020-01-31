@@ -17,6 +17,7 @@ The Object itself will be casted to an array during the validation process and t
 
 ## Example
 ```PHP
+# ExampleSchema.php
 <?php
 use Dry\DryStruct;
 
@@ -28,4 +29,12 @@ class ExampleSchema extends DryStruct
     self::optional('age')->filled('integer')->min(6);
   }
 }
+```
+```PHP
+# ExampleSchema.php
+<?php
+# validate expected schema
+(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7]);
+# validate faulty schema => method call will throw Exception
+(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4]);
 ```
