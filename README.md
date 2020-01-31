@@ -38,3 +38,18 @@ class ExampleSchema extends DryStruct
 # validate faulty schema => method call will throw Exception
 (new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4]);
 ```
+## supported constraints
+* filled:
+  datatype of the property, depending on the expected datatype, further evaluation will be executed
+* min:
+  Minimum value for a number property
+* max:
+  Maximum value for a number property
+* minLength:
+  Minimum length for a string property
+* maxLength:
+  Maximum length for a string property
+* minSize:
+  Minimum size for an array property
+* maxSize:
+  Maximum size for an array property
