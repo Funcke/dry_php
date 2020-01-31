@@ -1,5 +1,5 @@
 {
-    "name": "jof/dry_php",
+    "name": "funcke/dry_php",
     "description": "Dry::Schema and Dry::Validation for php",
     "type": "library",
     "require": {},
