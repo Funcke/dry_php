@@ -1,4 +1,4 @@
-# Dry validation for php
+# Dry validation for php [![Build Status](https://travis-ci.org/Funcke/dry_php.svg?branch=master)](https://travis-ci.org/Funcke/dry_php)
 A typical PHP app is constantly dealing with a shitload of if-clauses to determine, wether or not an entity is compliant with the constraint the developers had in mind, when creating their software.
 
 Dry offers a simple way to eleminate overhead validation clauses and centers constraints for any type of entity in one file. Just call validate on an instance of this class and it will validate the parameter you provide.
