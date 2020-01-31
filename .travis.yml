@@ -1,0 +1,11 @@
+language: php
+php:
+  - 7.3
+before_script:
+  - composer update -o
+
+script: ./vendor/bin/phpunit test
+
+notifications:
+  on_success: never
+  on_failure: always
