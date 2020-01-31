@@ -31,7 +31,7 @@ class ExampleSchema extends DryStruct
 }
 ```
 ```PHP
-# ExampleSchema.php
+# index.php
 <?php
 # validate expected schema
 (new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7]);
