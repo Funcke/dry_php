@@ -4,7 +4,7 @@ namespace Dry\Schema;
 
 use Dry\Exception\InvalidSchemaException;
 trait Utility {
-public function methods(){
+public static function methods(){
     return [
     "type" => function ($constraint, $value) { 
       if(gettype($value) !== $constraint) 
