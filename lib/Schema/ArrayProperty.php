@@ -59,11 +59,23 @@ class Property
     return $this;
   }
 
+  // TODO: How do I continuosly execute predicate for every element of an array
+  public function each($function) {
+    $this->structure['each'] = $function;
+  }
+
   public function validate($value)
   {
-    foreach($this->structure as $method => $arg)
-    {
-      Utility::methods()[$method]($arg, $value);
+    foreach($value as $element) {
+      $this->validate_element($element);
     }
+  }
+
+  protected function validate_element($elem)
+  {
+    foreach($this->structure as $method => $arg)
+      {
+        Utility::methods()[$method]($arg, $elem);
+      }
   }
 }

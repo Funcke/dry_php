@@ -10,7 +10,7 @@ final class ArrayInputPropertyAcceptanceTest extends TestCase
     {
       $thrown = false;
       try {
-        $data_array = ["name" => "Josef", "age" => 7];
+        $data_array = ["name" => "Josef", "age" => 7, "book" => (object)["title" => "example"]];
         (new ExampleSchema())->validate($data_array); 
       }catch (InvalidSchemaException $err) 
       {
@@ -23,7 +23,7 @@ final class ArrayInputPropertyAcceptanceTest extends TestCase
     {
       $thrown = false;
       try {
-        $data_array = ["name" => "Josef"];
+        $data_array = ["name" => "Josef", "book" => (object)["title" => "example"]];
         (new ExampleSchema())->validate($data_array); 
       }catch (InvalidSchemaException $err) 
       {
@@ -35,14 +35,14 @@ final class ArrayInputPropertyAcceptanceTest extends TestCase
     public function testRecognisesAdditionalFields(): void
     {
       $this->expectException(InvalidSchemaException::class);
-      $data_array = ["name" => "Josef", "age" => 7, "email" => "hello@world"];
+      $data_array = ["name" => "Josef", "age" => 7, "email" => "hello@world", "book" => (object)["title" => "example"]];
       (new ExampleSchema())->validate($data_array); 
     }
 
     public function testRequiresRequiredFieldsTobePresent(): void
     {
       $this->expectException(InvalidSchemaException::class);
-      $data_array = ["age" => 7];
+      $data_array = ["age" => 7, "book" => (object) ["title" => "example"]];
       (new ExampleSchema())->validate($data_array); 
     }
 }

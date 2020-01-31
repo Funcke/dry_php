@@ -10,7 +10,7 @@ final class ObjectInputPropertyAcceptanceTest extends TestCase
     {
       $thrown = false;
       try {
-        $data_object = (object) ["name" => "John", "age" => 23];
+        $data_object = (object) ["name" => "John", "age" => 23, "book" => (object)["title" => "example"]];
         (new ExampleSchema())->validate($data_object);
       }catch (InvalidSchemaException $err) 
       {
@@ -23,7 +23,7 @@ final class ObjectInputPropertyAcceptanceTest extends TestCase
     {
       $thrown = false;
       try {
-        $data_object = (object) ["name" => "John"];
+        $data_object = (object) ["name" => "John", "book" => (object)["title" => "example"]];
         (new ExampleSchema())->validate($data_object);
       }catch (InvalidSchemaException $err) 
       {
