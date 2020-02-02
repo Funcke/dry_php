@@ -3,7 +3,7 @@
 namespace Dry\Schema;
 use Dry\Schema\Utility;
 
-class Property 
+class ArrayProperty 
 {
   private $structure = [];
   public function __construct() 

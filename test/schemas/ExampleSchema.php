@@ -10,6 +10,5 @@ class ExampleSchema extends DryStruct
     $this->required_object('book')->do(function($book) {
       $book->required('title')->filled('string');
     });
-    #$this->required_array('authors')->
   }
 }
