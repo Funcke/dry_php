@@ -27,6 +27,9 @@ class ExampleSchema extends DryStruct
     parent::__construct();
     self::required('name')->filled('string');
     self::optional('age')->filled('integer')->min(6);
+    self::required_object('book')->do(function($book) {
+      $book->required('title')->filled('string');
+    });
   }
 }
 ```
