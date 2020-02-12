@@ -37,9 +37,15 @@ class ExampleSchema extends DryStruct
 # index.php
 <?php
 # validate expected schema
-(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7, 'book' => (object) ['title' => 'Richard']]);
+(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7, 'book' => (object) [
+  'title' => 'Richard'
+  ]
+ ]);
 # validate faulty schema => method call will throw Exception
-(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4, 'book' => (object) ['title' => 'Richard']]);
+(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4, 'book' => (object) [
+'title' => 'Richard'
+  ]
+]);
 ```
 ## supported constraints
 * filled:
