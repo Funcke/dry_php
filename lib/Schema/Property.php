@@ -3,15 +3,22 @@
 namespace Dry\Schema;
 use Dry\Schema\Utility;
 
+/**
+ * Class Property
+ * @package Dry\Schema
+ */
 class Property 
 {
+    /**
+     * @var array
+     */
   private $structure = [];
-  public function __construct() 
+  public function __construct()
   {
     ;
   }
 
-  public function filled($type) 
+  public function filled($type)
   {
     $this->structure['type'] = $type;
     return $this;

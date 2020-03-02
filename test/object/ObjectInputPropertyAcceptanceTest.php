@@ -10,7 +10,15 @@ final class ObjectInputPropertyAcceptanceTest extends TestCase
     {
       $thrown = false;
       try {
-        $data_object = (object) ["name" => "John", "age" => 23, "book" => (object)["title" => "example"]];
+        $data_object = (object) ["name" => "John", "age" => 23, "book" => (object)["title" => "example"], "buyers" =>[
+            (object)[
+                "name" => "Richard"
+            ],
+            (object)[
+                "name" => "Lorenz"
+            ]
+        ]
+        ];
         (new ExampleSchema())->validate($data_object);
       }catch (InvalidSchemaException $err) 
       {
@@ -23,7 +31,15 @@ final class ObjectInputPropertyAcceptanceTest extends TestCase
     {
       $thrown = false;
       try {
-        $data_object = (object) ["name" => "John", "book" => (object)["title" => "example"]];
+        $data_object = (object) ["name" => "John", "book" => (object)["title" => "example"], "buyers" =>[
+            (object)[
+                "name" => "Richard"
+            ],
+            (object)[
+                "name" => "Lorenz"
+            ]
+        ]
+        ];
         (new ExampleSchema())->validate($data_object);
       }catch (InvalidSchemaException $err) 
       {
@@ -35,14 +51,60 @@ final class ObjectInputPropertyAcceptanceTest extends TestCase
     public function testRecognisesAdditionalFields(): void
     {
       $this->expectException(InvalidSchemaException::class);
-      $data_object = (object) ["name" => "Josef", "age" => 7, "email" => "hello@world"];
+      $data_object = (object) ["name" => "Josef", "age" => 7, "email" => "hello@world", "buyers" =>[
+          (object)[
+              "name" => "Richard"
+          ],
+          (object)[
+              "name" => "Lorenz"
+          ]
+      ]
+      ];
       (new ExampleSchema())->validate($data_object);
     }
 
     public function testRequiresRequiredFieldsToBePresent(): void
     {
       $this->expectException(InvalidSchemaException::class);
-      $data_object = (object) ["age" => 7];
+      $data_object = (object) ["age" => 7, "buyers" =>[
+          (object)[
+              "name" => "Richard"
+          ],
+          (object)[
+              "name" => "Lorenz"
+          ]
+      ]
+      ];
       (new ExampleSchema())->validate($data_object);
+    }
+
+    public function testWithErrorInArray(): void
+    {
+        $this->expectException(InvalidSchemaException::class);
+        $data_array = (object)["age" => 7, "book" => (object) ["title" => "example"], "buyers" =>[
+            (object)[
+                "address" => "Richard"
+            ],
+            (object)[
+                "name" => "Lorenz"
+            ]
+        ]
+        ];
+        (new ExampleSchema())->validate($data_array);
+    }
+
+    public function testWithErrorWrongValueInArray(): void
+    {
+        $this->expectException(InvalidSchemaException::class);
+        $data_array = (object)["age" => 7, "book" => (object) ["title" => "example"], "buyers" =>[
+            (object)[
+                "name" => 2
+            ],
+            (object)[
+                "name" => "Lorenz"
+            ]
+        ]
+        ];
+        (new ExampleSchema())->validate($data_array);
     }
 }
