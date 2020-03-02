@@ -27,6 +27,9 @@ class ExampleSchema extends DryStruct
     parent::__construct();
     self::required('name')->filled('string');
     self::optional('age')->filled('integer')->min(6);
+    self::required_object('book')->do(function($book) {
+      $book->required('title')->filled('string');
+    });
   }
 }
 ```
@@ -34,9 +37,15 @@ class ExampleSchema extends DryStruct
 # index.php
 <?php
 # validate expected schema
-(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7]);
+(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7, 'book' => (object) [
+  'title' => 'Richard'
+  ]
+ ]);
 # validate faulty schema => method call will throw Exception
-(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4]);
+(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4, 'book' => (object) [
+'title' => 'Richard'
+  ]
+]);
 ```
 ## supported constraints
 * filled:
@@ -53,3 +62,5 @@ class ExampleSchema extends DryStruct
   Minimum size for an array property
 * maxSize:
   Maximum size for an array property
+* required_object:
+  Adds a object property to the target schema. This object needs to have it's own validation configured as well!
