@@ -30,6 +30,11 @@ class ExampleSchema extends DryStruct
     self::required_object('book')->do(function($book) {
       $book->required('title')->filled('string');
     });
+    $this->required_array('buyers')->each(function($buyer) {
+       $buyer->type('object')->do(function($buyer) {
+         $buyer->required('name')->filled('string');
+       });
+     });
   }
 }
 ```
@@ -39,6 +44,14 @@ class ExampleSchema extends DryStruct
 # validate expected schema
 (new ExampleSchema())->validate(['name' => 'Richard', 'age' => 7, 'book' => (object) [
   'title' => 'Richard'
+  ],
+  "buyers" =>[
+    (object)[
+      "name" => "Richard"
+    ],
+    (object)[
+      "name" => "Lorenz"
+    ]
   ]
  ]);
 # validate faulty schema => method call will throw Exception
