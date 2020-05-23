@@ -36,7 +36,7 @@ class Property
     return $this;
   }
 
-  public function minLenght($min)
+  public function minLength($min)
   {
     $this->structure['minLength'] = $min;
     return $this;
