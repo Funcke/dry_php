@@ -33,8 +33,12 @@ class ArrayProperty
 
     public function validate($value)
     {
+        $violations = [];
         foreach ($value as $element) {
-            $this->element->validate($element);
+            $result = $this->element->validate($element);
+            if(!empty($result))
+                array_push($violations, $result);
         }
+        return $violations;
     }
 }

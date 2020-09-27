@@ -1,2 +1,11 @@
-vendor/*
 .idea/*
+.idea/codeStyleSettings.xml
+composer.lock
+/vendor/
+coverage.xml
+.phpunit.result.cache
+.php_cs.cache
+.temp/coverage.php
+*.swp
+*.swo
+.vscode/

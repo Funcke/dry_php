@@ -102,52 +102,63 @@ class DryStruct
     /**
      * Checks if provided data structure fulfills all requirements previously defined.
      * @param $model mixed
-     * @throws InvalidSchemaException
+     * @return array
      */
   public function validate($model)
   {
     $clone = (array) $model;
-    self::validate_required($clone);
-    self::validate_optional($clone);
-    if(self::contains_additional($clone))
+    $violations = [];
+    $violations = array_merge($violations, $this->validate_required($clone));
+    $violations = array_merge($violations, $this->validate_optional($clone));
+    if($this->contains_additional($clone))
     {
-      throw new InvalidSchemaException(implode(',', $this->additional));
+      $violations['additional'] = $this->additional;
     }
+    return $violations;
   }
 
     /**
      * Checks all fields in model against the required property array.
      * @param $model mixed
-     * @throws InvalidSchemaException
+     * @return array
      */
   private function validate_required($model)
   {
+    $violations = [];
     foreach($this->required as $key => $validation)
     {
       if(array_key_exists($key, $model))
       {
-        $validation->validate($model[$key]);
+        $result = $validation->validate($model[$key]);
         array_push($this->checked, $key);
+        if(!empty($result))
+          $violations[$key] = $result;
       } else {
-        throw new InvalidSchemaException($key);
+        $violations[$key] = ["missing"];
       }
     }
+    return $violations;
   }
 
     /**
      * Checks all fields in model against optional property array.
      * @param $model mixed
+     * @return array
      */
   private function validate_optional($model)
   {
+    $violations = [];
     foreach($this->optional as $key => $validation)
     {
       if(array_key_exists($key, $model))
       {
-        $validation->validate($model[$key]);
+        $result = $validation->validate($model[$key]);
         array_push($this->checked, $key);
+        if(!empty($result))
+          $violations[$key] = $result;
       }
     }
+    return $violations;
   }
 
     /**
@@ -157,7 +168,15 @@ class DryStruct
      */
   private function contains_additional($model)
   {
-    $this->additional = array_diff(array_keys($model), array_merge(array_keys($this->optional), array_keys($this->required)));
+    $this->additional = array_values(
+      array_diff(
+        array_keys($model), 
+        array_merge(
+          array_keys($this->optional), 
+          array_keys($this->required)
+        )
+      )
+    );
     return !empty($this->additional);
   }
 }

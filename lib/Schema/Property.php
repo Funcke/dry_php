@@ -2,6 +2,7 @@
 
 namespace Dry\Schema;
 use Dry\Schema\Utility;
+use Dry\Exception\InvalidSchemaException;
 
 /**
  * Class Property
@@ -68,9 +69,15 @@ class Property
 
   public function validate($value)
   {
+    $violatedConstraints = [];
     foreach($this->structure as $method => $arg)
     {
-      Utility::methods()[$method]($arg, $value);
+      try{
+        Utility::methods()[$method]($arg, $value);
+      } catch (InvalidSchemaException $e) {
+        array_push($violatedConstraints, $method);
+      }
     }
+    return $violatedConstraints;
   }
 }
