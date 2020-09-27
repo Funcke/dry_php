@@ -54,11 +54,20 @@ class ExampleSchema extends DryStruct
     ]
   ]
  ]);
-# validate faulty schema => method call will throw Exception
-(new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4, 'book' => (object) [
+# validate faulty schema => method call returns array with affected fields + violations
+$result = (new ExampleSchema())->validate(['name' => 'Richard', 'age' => 4, 'book' => (object) [
 'title' => 'Richard'
   ]
 ]);
+
+print_r($result);
+##
+# output
+# Array(
+#   [buyers] => Array(
+#     missing 
+#   ) 
+# )
 ```
 ## supported constraints
 * filled:
